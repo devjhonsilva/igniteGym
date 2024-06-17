@@ -1,19 +1,15 @@
-import { VStack, Image, Text, Center, Heading, ScrollView } from 'native-base';
+import { VStack, Image, Text, Center, Heading, ScrollView } from "native-base";
 
-import BackgroundImg from '@assets/background.png'
 import LogoSvg from '@assets/logo.svg';
+import BackgroundImg from '@assets/background.png';
 
-import { Input } from '@components/Input';
-import { Button } from '@components/Button';
-
+import { Input } from "@components/Input";
+import { Button } from "@components/Button";
 
 export function SignIn() {
     return (
-        <ScrollView
-            contentContainerStyle={{ flexGrow: 1 }}
-            showsVerticalScrollIndicator={false}
-        >
-            <VStack flex={1} bg="gray.700" px={10} pb={16}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
+            <VStack flex={1} bg="gray.700">
                 <Image
                     source={BackgroundImg}
                     alt="Pessoas treinando"
@@ -24,36 +20,36 @@ export function SignIn() {
 
                 <Center my={24}>
                     <LogoSvg />
+
                     <Text color="gray.100" fontSize="sm">
-                        Treine a sua mente e o seu corpo
+                        Treine sua mente e o seu corpo.
                     </Text>
                 </Center>
 
-                <Center>
-                    <Heading color="gray.100" fontSize="xl" mb={6} fontFamily="heading">
-                        Acesse sua conta
-                    </Heading>
+                <Center pb={16} px={10}>
+                    <Center>
+                        <Heading color="gray.100" fontSize="xl" mb={6} fontFamily="heading">
+                            Acesse sua conta
+                        </Heading>
 
-                    <Input
-                        placeholder='Email'
-                        keyboardType='email-address'
-                        autoCapitalize='none'
-                    />
-                    <Input
-                        placeholder='Senha'
-                        secureTextEntry
-                    />
+                        <Input
+                            placeholder="E-mail"
+                            keyboardType="email-address"
+                            autoCapitalize="none"
 
+                        />
+                        <Input
+                            placeholder="Senha"
+                            secureTextEntry
+                        />
+                    </Center>
                     <Button title="Acessar" />
-                </Center>
-
-                <Center mt={24}>
-                    <Text color="gray.100" fontSize="sm" mb={3} fontFamily="body">
-                        Ainda não tem acesso?
-                    </Text>
+                    <Text mt={200} color="white">Ainda não tem acesso?</Text>
                     <Button
-                        title="Criar conta"
-                        variant="outline" />
+                        title="Criar a sua conta"
+                        variant="outline"
+                        mt={2}
+                    />
                 </Center>
             </VStack>
         </ScrollView>
