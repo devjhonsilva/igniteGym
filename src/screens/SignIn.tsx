@@ -3,16 +3,15 @@ import { useNavigation } from "@react-navigation/native";
 import { VStack, Image, Text, Center, Heading, ScrollView, useToast } from "native-base";
 
 import { AuthNavigatorRoutesProps } from '@routes/auth.routes';
-//import { useAuth } from '@hooks/useAuth';
+import { useAuth } from '@hooks/useAuth';
 
 import LogoSvg from '@assets/logo.svg';
 import BackgroundImg from '@assets/background.png';
 
-//import { AppError } from '@utils/AppError';
-
 import { Input } from "@components/Input";
 import { Button } from "@components/Button";
 import { useState } from 'react';
+import { AppError } from '@utils/AppError';
 
 type FormData = {
   email: string;
@@ -22,9 +21,9 @@ type FormData = {
 export function SignIn() {
   const [isLoading, setIsLoading] = useState(false)
 
-  //const { singIn } = useAuth();
+  const { singIn } = useAuth();
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
-  const toas = useToast();
+  const toast = useToast();
 
   const { control, handleSubmit, formState: { errors } } = useForm<FormData>()
 
@@ -32,9 +31,30 @@ export function SignIn() {
     navigation.navigate('signUp');
   }
 
+  async function handleSignIn({ email, password }: FormData) {
+    try{
+      setIsLoading(true)
+      await singIn(email, password);
+      
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+
+      const title = isAppError ? error.message : 'Não foi possível entrar. Tente novamente.'
+
+      setIsLoading(false)
+      
+      toast.show({
+        title,
+        placement: 'top',
+        bgColor: 'red.500'
+      })
+      
+    }
+  }
+
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
-        <VStack flex={1} px={10} pb={16}>
+      <VStack flex={1} px={10} pb={16}>
         <Image
           source={BackgroundImg}
           defaultSource={BackgroundImg}
@@ -87,7 +107,7 @@ export function SignIn() {
 
           <Button
             title="Acessar"
-            //onPress={handleSubmit(handleSignIn)}
+            onPress={handleSubmit(handleSignIn)}
             isLoading={isLoading}
           />
         </Center>
@@ -106,4 +126,5 @@ export function SignIn() {
       </VStack>
     </ScrollView>
   );
-}
+};
+
